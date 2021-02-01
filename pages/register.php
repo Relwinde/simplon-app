@@ -12,7 +12,7 @@
     <?php
     require '../includes/functions.php';
     if (isset($_POST['register'])) {
-        if (pwdNotMatch($_POST['pwd'], $_POST['pwdrepeat'])) {
+        if (pwdNotMatch($_POST['pass'], $_POST['pwdrepeat'])) {
             header("location: register.php?error:passwordmismatch");
             exit();
         }
@@ -24,8 +24,14 @@
             header("location: register.php?error:usernamealreadyexits");
             exit();
         }
-        if (creatUser($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['username'], $_POST['pwd'])) {
-            header("location: ../index.php?registered");
+
+
+
+        $hashedPwd = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+
+
+        if (creatUser($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['username'], $hashedPwd)) {
+            var_dump($hashedPwd);
         } else {
             header("location: register.php?error:registrationproblem");
             exit();
@@ -39,7 +45,7 @@
         <input type="text" name="firstname" placeholder="Prenom(s)" required>
         <input type="email" name="email" placeholder="E-mail" required>
         <input type="text" name="username" placeholder="Nom s'utilisateur" required>
-        <input type="password" name="pwd" placeholder="Mot de passe" required>
+        <input type="password" name="pass" placeholder="Mot de passe" required>
         <input type="password" name="pwdrepeat" placeholder="Mot de passe" required>
         <button type="submit" name="register">S'inscrire</button>
         <a href="../index.php">Ou se connecter</a>

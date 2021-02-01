@@ -43,14 +43,15 @@ function pwdNotMatch($pwd, $pwdrpt)
 
 
 
-function creatUser($firstname, $lastname, $email, $username, $pwd)
+function creatUser($firstname, $lastname, $email, $username, $pwde)
 {
     require 'connect.php';
     $result;
-    $stmt = $database->prepare("INSERT INTO admins (firstname, lastname, email, username, pwd) VALUES (?,?,?,?,?)");
-    $stmt->bind_param("sssss", $firstname, $lastname, $email, $username, $pwd);
+    $stmt = $database->prepare("INSERT INTO admins (firstname, lastname, email, username, userpass) VALUES (?,?,?,?,?)");
+    $stmt->bind_param("sssss", $firstname, $lastname, $email, $username, $pwde);
     if ($stmt->execute()) {
         $result = true;
+        $stmt->close();
     } else {
         $result = false;
     }
