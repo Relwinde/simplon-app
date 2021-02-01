@@ -12,22 +12,10 @@
     <?php
     require 'includes/functions.php';
     if (isset($_POST['register'])) {
-        if (pwdNotMatch($_POST['pwd'], $_POST['pwdrepeat'])) {
-            header("location: register.php?error:passwordmismatch");
-            exit();
-        }
-        if (emailExists($_POST['email'])) {
-        }
-        if (userNameExists($_POST['username'])) {
-            header("location: register.php?error:usernamealreadyexits");
-            exit();
-        }
-        echo "name";
-        if (creatUser($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['username'], $_POST['pwd'])) {
-            header("location: register.php?registered");
+        if (userConnect($_POST['username'], $_POST['pwd'])) {
+            header("location: home.php");
         } else {
-            header("location: register.php?error:registrationproblem");
-            exit();
+            header("location: index.php?error:authentificationerror");
         }
     }
     ?>

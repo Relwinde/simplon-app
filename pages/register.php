@@ -31,7 +31,7 @@
 
 
         if (creatUser($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['username'], $hashedPwd)) {
-            var_dump($hashedPwd);
+            header("location: ../index.php?registered");
         } else {
             header("location: register.php?error:registrationproblem");
             exit();

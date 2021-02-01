@@ -41,6 +41,28 @@ function pwdNotMatch($pwd, $pwdrpt)
     return $result;
 }
 
+function userConnect($userId, $pass)
+{
+    $result = false;
+    require 'connect.php';
+    $stmt = $database->prepare("SELECT * FROM admins WHERE email=? OR username=?");
+    $stmt->bind_param("ss", $userId, $pass);
+    $stmt->execute();
+    $oper = $stmt->get_result();
+    if ($oper->num_rows > 0) {
+        $data = $oper->fetch_array();
+        $dbpass = $data['userpass'];
+        if (password_verify($pass, $dbpass)) {
+            $result = true;
+        } else {
+            $result = false;
+        }
+    } else {
+        $result = false;
+    }
+
+    return $result;
+}
 
 
 function creatUser($firstname, $lastname, $email, $username, $pwde)
