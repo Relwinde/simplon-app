@@ -46,7 +46,7 @@ function userConnect($userId, $pass)
     $result = false;
     require 'connect.php';
     $stmt = $database->prepare("SELECT * FROM admins WHERE email=? OR username=?");
-    $stmt->bind_param("ss", $userId, $pass);
+    $stmt->bind_param("ss", $userId, $userId);
     $stmt->execute();
     $oper = $stmt->get_result();
     if ($oper->num_rows > 0) {
