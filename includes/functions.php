@@ -15,6 +15,7 @@ function userNameExists($username)
     }
     return $result;
 }
+
 function emailExists($email)
 {
     require 'connect.php';
